@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoryRepository;
+use App\Repository\GenreRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @ORM\Entity(repositoryClass=GenreRepository::class)
  */
-class Category
+class Genre
 {
     /**
      * @ORM\Id
@@ -21,11 +21,6 @@ class Category
      * @ORM\Column(type="string", length=255)
      */
     private $name;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isPublished;
 
     public function getId(): ?int
     {
@@ -44,21 +39,8 @@ class Category
         return $this;
     }
 
-    public function getIsPublished(): ?bool
-    {
-        return $this->isPublished;
-    }
-
-    public function setIsPublished(bool $isPublished): self
-    {
-        $this->isPublished = $isPublished;
-
-        return $this;
-    }
-
     public function displayTitle(): string
     {
-        return 'Le titre la catégorie est : '.$this->getName();
+        return 'Le titre du genre est : '.$this->getName();
     }
-
 }

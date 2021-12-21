@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Service\ArticleScoreCalculatorCriterias\ArticleScoreCalculatorCriteriaInterface;
+use App\Service\ArticleScoreCalculatorInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
@@ -15,7 +15,7 @@ class Kernel extends BaseKernel
     {
         parent::build($container);
 
-//        $container->registerForAutoconfiguration(ArticleScoreCalculatorCriteriaInterface::class)
-//            ->addTag('article.score.calculator.criteria');
+        $container->registerForAutoconfiguration(ArticleScoreCalculatorInterface::class)
+            ->addTag('article.score.calculator.criteria');
     }
 }

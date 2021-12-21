@@ -90,4 +90,9 @@ class Article
 
         return $this;
     }
+
+    public function displayTitle(): string
+    {
+        return 'Le titre l\'article est : '.$this->getTitle();
+    }
 }

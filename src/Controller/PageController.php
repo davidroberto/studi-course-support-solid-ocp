@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\GenreRepository;
 use App\Repository\TagRepository;
 use App\Service\ArticleScoreCalculator;
 use App\Service\EntityView;
@@ -15,6 +16,55 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PageController extends AbstractController
 {
+    /**
+     * @Route("/category/{id}", name="category")
+     */
+    public function category($id, CategoryRepository $categoryRepository)
+    {
+        $category = $categoryRepository->find($id);
+
+        $entityView = new EntityView();
+        $view = $entityView->displayTitle($category);
+
+        return new Response($view);
+    }
+
+    /**
+     * @Route("/tag/{id}", name="tag")
+     */
+    public function tag($id, TagRepository $tagRepository)
+    {
+        $tag = $tagRepository->find($id);
+
+        $entityView = new EntityView();
+        $view = $entityView->displayTitle($tag);
+
+        return new Response($view);
+    }
+
+    /**
+     * @Route("/genre/{id}", name="genre")
+     */
+    public function genre($id, GenreRepository $genreRepository)
+    {
+        $genre = $genreRepository->find($id);
+
+        $entityView = new EntityView();
+        $view = $entityView->displayTitle($genre);
+
+        return new Response($view);
+    }
+
+    /**
+     * @Route("/article/{id}/score", name="article_score")
+     */
+    public function scoreArticle($id, ArticleRepository $articleRepository, ArticleScoreCalculator $articleScoreCalculator)
+    {
+        $article = $articleRepository->find($id);
+        $scoreAverage = $articleScoreCalculator->calculateScore($article);
+
+        return new Response($scoreAverage);
+    }
 
     /**
      * @Route("/article/{id}", name="article")
@@ -29,19 +79,6 @@ class PageController extends AbstractController
         return new Response($view);
     }
 
-    /**
-     * @Route("/category/{id}", name="category")
-     */
-    public function category($id, CategoryRepository $categoryRepository)
-    {
-        $category = $categoryRepository->find(1);
-
-        $entityView = new EntityView();
-
-        $view = $entityView->displayTitle($category);
-
-        return new Response($view);
-    }
 
 
 }
