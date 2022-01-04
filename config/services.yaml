@@ -24,10 +24,10 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\Service\ArticleScoreCalculator:
+    App\Service\ScoreCalculator\ArticleScoreCalculator:
         arguments:
             $articleScoreCalculatorCriterias: !tagged_iterator article.score.calculator.criteria
 
     App\Controller\ArticleController:
-        arguments: [ '@App\Service\SeeMoreExtractGenerator' ]
+        arguments: [ '@App\Service\ExtractGenerator\FirewallExtractGenerator', '@App\Service\PriceCalculator\PriceArticleCalculator' ]
         tags: [ 'controller.service_arguments' ]

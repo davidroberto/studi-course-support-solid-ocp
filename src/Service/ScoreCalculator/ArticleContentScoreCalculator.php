@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Service;
+namespace App\Service\ScoreCalculator;
 
 
 use App\Entity\Article;

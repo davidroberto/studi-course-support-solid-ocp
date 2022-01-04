@@ -37,6 +37,11 @@ class Article
      */
     private $nbLectures;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isPaid;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -94,5 +99,18 @@ class Article
     public function displayTitle(): string
     {
         return 'Le titre l\'article est : '.$this->getTitle();
+    }
+
+
+    public function getIsPaid(): ?bool
+    {
+        return $this->isPaid;
+    }
+
+    public function setIsPaid(?bool $isPaid): self
+    {
+        $this->isPaid = $isPaid;
+
+        return $this;
     }
 }

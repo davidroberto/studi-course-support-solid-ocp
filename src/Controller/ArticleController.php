@@ -5,27 +5,31 @@ namespace App\Controller;
 
 
 use App\Repository\ArticleRepository;
-use App\Service\ArticleScoreCalculator;
-use App\Service\DotsExtractGenerator;
-use App\Service\EntityView;
-use App\Service\ExtractGeneratorInterface;
-use App\Service\SeeMoreExtractGenerator;
+use App\Service\ExtractGenerator\ExtractGeneratorInterface;
+use App\Service\PriceCalculator\PriceArticleCalculatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleController extends AbstractController
 {
 
+    // ISP : Les clients ne doivent pas être forcés de dépendre de méthodes
+    // qu'ils n'utilisent pas
+
     /**
      * @var ExtractGeneratorInterface
      */
     private $extractGenerator;
+    /**
+     * @var PriceArticleCalculatorInterface
+     */
+    private $articleCalculator;
 
-    public function __construct(ExtractGeneratorInterface $extractGenerator)
+    public function __construct(ExtractGeneratorInterface $extractGenerator, PriceArticleCalculatorInterface $articleCalculator)
     {
         $this->extractGenerator = $extractGenerator;
+        $this->articleCalculator = $articleCalculator;
     }
 
 
@@ -37,7 +41,17 @@ class ArticleController extends AbstractController
         $article = $articleRepository->find($id);
         $extract = $this->extractGenerator->generateExtract($article);
 
-        dd($extract);
+        $price = 0;
+
+        if ($article->getIsPaid()) {
+            $price = $this->articleCalculator->calculatePrice($article);
+        }
+
+        return $this->render('article.html.twig', [
+            'article' => $article,
+            'extract' => $extract,
+            'price' => $price
+        ]);
     }
 
 

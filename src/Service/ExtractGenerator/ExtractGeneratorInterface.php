@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Service;
+namespace App\Service\ExtractGenerator;
 
 
 use App\Entity\Article;

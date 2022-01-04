@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Service;
+namespace App\Service\ExtractGenerator;
 
 // doit générer un extrait de l'article et lui ajouter "..."
 use App\Entity\Article;
